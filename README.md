@@ -52,6 +52,7 @@ This corpus contains a large metadata-rich collection of fictional conversations
 
 * Slack Demo
 
+	![Alt text](/Users/seyoungoh/desktop/Screen Shot 2017-10-15 at 7.40.32 AM.png)
 ![Alt text](/Users/seyoungoh/desktop/Screen Shot 2017-10-15 at 7.40.32 AM.png)
 * Test demo on prompt
 
