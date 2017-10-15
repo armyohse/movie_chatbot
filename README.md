@@ -52,11 +52,12 @@ This corpus contains a large metadata-rich collection of fictional conversations
 
 * Slack Demo
 
-	![Alt text](/Users/seyoungoh/desktop/Screen Shot 2017-10-15 at 7.40.32 AM.png)
-![Alt text](/Users/seyoungoh/desktop/Screen Shot 2017-10-15 at 7.40.32 AM.png)
+
+![Alt text](https://raw.githubusercontent.com/armyohse/movie_chatbot/master/image/Screen%20Shot%202017-10-15%20at%207.40.32%20AM.png)
+
 * Test demo on prompt
 
-![Alt text](/Users/seyoungoh/desktop/Screen Shot 2017-10-15 at 7.50.49 AM.png)
+![Alt text](https://raw.githubusercontent.com/armyohse/movie_chatbot/master/image/Screen%20Shot%202017-10-15%20at%207.50.49%20AM.png)
 
 # Environment
 * Python 3.6 / Tensorflow 1.3 / Cuda 7.5 
