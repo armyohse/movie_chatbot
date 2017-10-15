@@ -2,144 +2,70 @@
 
 * Cornell movie script data
 
-* Seq2Seq tensorflow deep learning model  
+* Seq2Seq tensorflow RNN Encoder-Decoder
 
-![Alt text](https://www.lds.com/wp-content/uploads/2016/06/chatbot_workflow_v2.svg)
+* Slack deploy bot
+
+![Alt text](https://camo.githubusercontent.com/8d80a980e563249371921b5494403878de6e47f4/68747470733a2f2f7777772e6c64732e636f6d2f77702d636f6e74656e742f75706c6f6164732f323031362f30362f63686174626f745f776f726b666c6f775f76322e737667)
 
 # Introduction
 
-Why reddit :
+Why Chatbot :
 
-Most growing technology community.  
+A chatbot can have a conversation with a customer but isn't limited by technology because the AI technology is built in to the software.  
 
-Python vs R :
+What is Seq2Seq :
 
-Most hottest two language in data science community.
+Seq2seq model is also called RNN encoder-decoder. A Seq2seq model usually consists of one encoder and one decoder. The goal
+for Seq2seq in testing time is to generate a sequence given another sequence. 
 
-Aim of this project is to :
-
-Count words frequency grouped for each day for two subreddits.
-
-Predict number of posts comments, ups, downs.
-
-![Alt text](https://github.com/armyohse/reddit_test/blob/master/image/dag.png?raw=true "Optional Title")
+![Alt text](https://image.slidesharecdn.com/tensorflow05-neural-machine-translation-seq2seq-170704044418/95/tensor-flow05-neuralmachinetranslationseq2seq-6-638.jpg?cb=1504913489)
 
 # Data
 
-Historical data were downloaded and feeded into kafka, transformed with spark and saved into hbase table with.
+Cornell Movie--Dialogs Corpus
 
-Realtime data is being transformed the same way.
+This corpus contains a large metadata-rich collection of fictional conversations extracted from raw movie scripts.
 
+- 220,579 conversational exchanges between 10,292 pairs of movie characters
+- involves 9,035 characters from 617 movies
+- in total 304,713 utterances
 
-* **Ingestion Layer**: Kafka is being used for Data Ingestion. As it is highly scalable , has low latency and high throughput.
+# Model
 
- * Reddit post transformed into the following:
- <pre>
-        #1
-        subreddit letter (R|P),
-        sec_to_day #seconds till the start of the post day in utc
-        postid
-        post_title
-        link_to_post
-        features
-            title_len
-            title_num_tokens
-            body_len
-            body_num_tokens
-            post_time
-            post_weekday
-            post_month
-            post_over18
-        targets
-            num_comments
-            ups
-            downs
+* Pre-processing data
+* Ateentional decoder
+* Encoder inputes
+* Bucketing
+* Sampled softmax
 
-        #2
-        subreddit letter (R|P)
-        seconds till the start of the post day in utc
-        postid
-        post_body
-        post_title
- </pre>
- * Python app utilizes PRAW library to subscribe on live updates from /r/Python, /r/RLanguage
-
-# Lambda architecture
-
-* **Speed Layer**: Spark Streaming is being used for the stream processing.
-  * #1 json simply saved into hbase table
-  * #2 json transformed into (word,frequency) pairs that uses to increment appropriate counter in hbase table
-
-* **Batch Layer**: The Batch layer is used for training ml models.
-  * Machine learning model was trained on downloaded historical data.
-
-* **Database**: Hbase is used for data storage  because of its consistent and high scale distributed processing nature.
-    It provides high speed read , writes and aggregation.
-   * Historical data is stored in the following format in table 'historical_reddit'
+* Seq2seq in Tensorflow
    <pre>
-             {
-             'k':f'M{subreddit}{day secs utc}{post.id}',
-             'cf':'d',
-             'q':'m',
-             'value':[features,targets]
-             }
-             {
-             'k':f'M{subreddit}{day secs utc}{post.id}',
-             'cf':'d',
-             'q':'g',
-             'value':[post_title,link_to_post]
-             }
-             {
-             'k':f'W{subreddit}{day secs utc}{token}',
-             'cf':'d',
-             'q':'w',
-             'value':token
-             }
-             {
-             'k':f'W{subreddit}{day secs utc}{token}',
-             'cf':'d',
-             'q':'c',
-             'value':frequency
-             }
+   outputs, state = embedding_rnn_seq2seq(encoder_inouts, decoder_inputs, cell, num_encoder_symbols, num_decoder_symbols, embedding_size, output_projection=None, feed_previous=False)          
     </pre>           
-   * Realtime data is stored additionally with predicted values in table 'upstream_reddit'
-   <pre>
-             {
-             'k':f'M{subreddit}{day secs utc}{post.id}',
-             'cf':'d',
-             'q':'p',
-             'value':predicted_targets
-             }
-    </pre>           
+   
+* Input Length Distribution
+   ![Alt text](https://discuss.pytorch.org/uploads/default/original/1X/fc5bf5d4ce1463e65397bd4c5b2c79fabc05692b.png)
+   
+# Test
+* Result after 98,000 Epoch trained 
 
-* **User Interface/Front-End**: Bokeh python library allows to display huge streaming dataset with high perfomance in web browser.
-# Screen-shot
+* Slack Demo
 
-![Alt text](https://github.com/armyohse/reddit_test/blob/master/image/word3.png)
+![Alt text](/Users/seyoungoh/desktop/Screen Shot 2017-10-15 at 7.40.32 AM.png)
+* Test demo on prompt
 
-* **Frequent word usage**: Realtime most frequent wors usage in subreddit.
+![Alt text](/Users/seyoungoh/desktop/Screen Shot 2017-10-15 at 7.50.49 AM.png)
 
-![Alt text](https://github.com/armyohse/reddit_test/blob/master/image/ml.png)
+# Environment
+* Python 3.6 / Tensorflow 1.3 / Cuda 7.5 
 
-* **Machine Learning(Prediction)**: Predict Vote up / down based on word usage compare to historical data
+* Google cloud GPU (NVIDIA Tesla K80)
+ 
+# Steps for Execution
 
-![Alt text](https://github.com/armyohse/reddit_test/blob/master/image/bokeh_plot_100vs10.png)
-
-* **Bokeh Graphic**: How many times "R language" mention in "Python subreddit", "Python" mention in "R subreddit"
-
-![Alt text](https://github.com/armyohse/reddit_test/blob/master/image/happyword.png)
-
-* **Bokeh Graphic**: Comparing python and R frequently word use "awesome", "cool", "fun", "happy", "helpful", "interesting" in their comments.
-
-* **Demo**
-
- * #Steps for Execution
-
-  * launch hbase_seed.py to create hbase table and fill them with initial data
-  * launch kafka_reddit_historical_data.py to start downloading historical data into kafka
-  * launch submit_s-p.py to start historicalStream that process and save data into hbase table 'historical_reddit'
-  * launch submit_s-p.py to start trainStream that load train ml model on historical data and save trained model in aws s3
-  * launch kafka_reddit_upstream.py to start streaming data into kafka
-  * launch submit_s-p.py to start upStream that process and save data into hbase table 'upstream_reddit'
-  * launch bokeh_server.py to start bokeh web server with UI
-  * open http://spark_master_public_dns_name/bokeh_server to open UI
+  * data_utils.py = pre-process data
+  * seq2seq_model.py = Tensorflow Seq2seq model 
+  * train_bot.py = train data
+  * bot.py = launching bot in prompt
+  * deploy_slack.py = deploy on slack
