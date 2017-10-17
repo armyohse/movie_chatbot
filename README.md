@@ -44,20 +44,20 @@ This corpus contains a large metadata-rich collection of fictional conversations
    outputs, state = embedding_rnn_seq2seq(encoder_inouts, decoder_inputs, cell, num_encoder_symbols, num_decoder_symbols, embedding_size, output_projection=None, feed_previous=False)          
     </pre>           
    
-* Loss on validation
+* Loss on validation after attention model applied
    ![Alt text](https://raw.githubusercontent.com/armyohse/movie_chatbot/master/image/Screen%20Shot%202017-10-16%20at%209.52.48%20PM.png)
    
 # Test
 * Result after 98,000 Epoch trained 
+* Test demo on prompt
+
+![Alt text](https://raw.githubusercontent.com/armyohse/movie_chatbot/master/image/Screen%20Shot%202017-10-15%20at%207.50.49%20AM.png)
 
 * Slack Demo
 
 
 ![Alt text](https://raw.githubusercontent.com/armyohse/movie_chatbot/master/image/Screen%20Shot%202017-10-15%20at%207.40.32%20AM.png)
 
-* Test demo on prompt
-
-![Alt text](https://raw.githubusercontent.com/armyohse/movie_chatbot/master/image/Screen%20Shot%202017-10-15%20at%207.50.49%20AM.png)
 
 # Environment
 * Python 3.6 / Tensorflow 1.3 / Cuda 7.5 
