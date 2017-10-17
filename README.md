@@ -2,7 +2,7 @@
 
 * Cornell movie script data
 
-* Seq2Seq tensorflow RNN Encoder-Decoder with Attention
+* Seq2Seq tensorflow RNN Encoder-Decoder with Attention model
 
 * Deployed on slack API
 
@@ -44,8 +44,8 @@ This corpus contains a large metadata-rich collection of fictional conversations
    outputs, state = embedding_rnn_seq2seq(encoder_inouts, decoder_inputs, cell, num_encoder_symbols, num_decoder_symbols, embedding_size, output_projection=None, feed_previous=False)          
     </pre>           
    
-* Input Length Distribution
-   ![Alt text](https://discuss.pytorch.org/uploads/default/original/1X/fc5bf5d4ce1463e65397bd4c5b2c79fabc05692b.png)
+* Loss on validation
+   ![Alt text](https://raw.githubusercontent.com/armyohse/movie_chatbot/master/image/Screen%20Shot%202017-10-16%20at%209.52.48%20PM.png)
    
 # Test
 * Result after 98,000 Epoch trained 
