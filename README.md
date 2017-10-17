@@ -19,6 +19,7 @@ What is Seq2Seq :
 Seq2seq model is also called RNN encoder-decoder. A Seq2seq model usually consists of one encoder and one decoder. The goal
 for Seq2seq in testing time is to generate a sequence given another sequence. 
 
+Attention mode :
 The attention model comes between the encoder and the decoder and helps the decoder to pick only the encoded inputs that are important for each step of the decoding process.
 
 ![Alt text](https://image.slidesharecdn.com/tensorflow05-neural-machine-translation-seq2seq-170704044418/95/tensor-flow05-neuralmachinetranslationseq2seq-6-638.jpg?cb=1504913489)
