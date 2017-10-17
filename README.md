@@ -2,9 +2,9 @@
 
 * Cornell movie script data
 
-* Seq2Seq tensorflow RNN Encoder-Decoder
+* Seq2Seq tensorflow RNN Encoder-Decoder with Attention
 
-* Slack deploy bot
+* Deployed on slack API
 
 ![Alt text](https://camo.githubusercontent.com/8d80a980e563249371921b5494403878de6e47f4/68747470733a2f2f7777772e6c64732e636f6d2f77702d636f6e74656e742f75706c6f6164732f323031362f30362f63686174626f745f776f726b666c6f775f76322e737667)
 
@@ -34,10 +34,10 @@ This corpus contains a large metadata-rich collection of fictional conversations
 # Model
 
 * Pre-processing data
-* Ateentional decoder
-* Encoder inputes
 * Bucketing
-* Sampled softmax
+* Encoder inputes
+* 1024 dimension 3 LSTM layers
+* Weighted cross-entropy loss for a sequence of logits
 
 * Seq2seq in Tensorflow
    <pre>
